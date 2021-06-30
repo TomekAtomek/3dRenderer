@@ -5,6 +5,7 @@
 
 #include "display.h"
 #include "vector.h"
+#include "utils.h"
 
 #define NBR_OF_POINTS 9 * 9 * 9
 
@@ -27,7 +28,7 @@ void setup(void){
 						 windowWidth, 
 	                     windowHeight);
 
-	logFile = fopen("/home/tomek/3drederer/log.txt", "w+");
+	//logFile = fopen("/home/tomek/3drederer/log.txt", "w+");
 
 
 	int pointCount = 0;
@@ -130,7 +131,7 @@ void render(void){
 				 4,
 				 4, 
 				 0xFF0000FF);
-		fprintf(logFile, "Displaying point :  %f , %f \n", projectedPoint.x + (windowWidth / 2), projectedPoint.y + (windowHeight / 2));
+		LOGINFO("Displaying point :  %f , %f \n", projectedPoint.x + (windowWidth / 2), projectedPoint.y + (windowHeight / 2));
 
 	}
 
@@ -145,21 +146,23 @@ void render(void){
 int main(int argc, char* argv[]){
 
     isRunning = initializeWindow();
-
+	INIT_LOG
 	setup();
 	while(isRunning){
-		fprintf(logFile, "Start of frame...\n");
-		fprintf(logFile, "WindowWidth = %d, WindowHeight = %d\n", windowWidth, windowHeight);
+		LOGINFO("Start of frame...\n");
+		LOGINFO("Start of frame...\n");
+		LOGINFO("WindowWidth = %d, WindowHeight = %d\n", windowWidth, windowHeight);
 
 		processInput();
 		update();
 		render();
 
-		fprintf(logFile, "End of frame...\n");
+		LOGINFO("End of frame...\n");
 	}
 
 	destroyWindow();
-	fclose(logFile);
+	CLOSE_LOG
+	//fclose(logFile);
 
 	return 0;
 }
